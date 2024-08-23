@@ -1,12 +1,15 @@
 import "./App.css";
 
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 
-import { Data, mockData } from "./mockData";
+import Post from "./getPost";
+import Home from "./home";
 
 const Display = styled.div`
   width: 600px;
   height: 100vh;
+  position: relative;
 `;
 
 const Header = styled.div`
@@ -18,64 +21,35 @@ const Header = styled.div`
   color: black;
 `;
 
-interface ShowDataProps {
-  data: Data;
-}
-
 const BoardList = styled.ul`
   align-items: center;
   list-style: none;
   margin-top: 30px;
 `;
 
-const BoardItem = styled.li`
-  background-color: #f4f4f4;
-  height: 80px;
-  width: 500px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  align-items: flex-start;
-  flex-direction: column;
+const PostButton = styled.button`
+  border-radius: 0;
+  border-color: black;
+  background-color: white;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
 `;
-
-const BoardTitle = styled.div`
-  font-family: "Pretendard";
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 31.03px;
-  text-align: left;
-  color: black;
-  margin-left: 20px;
-  padding-top: 13px;
-`;
-
-const BoardBody = styled.div`
-  font-family: "Pretendard";
-  font-size: 18px;
-  text-align: left;
-  margin-left: 20px;
-`;
-
-interface ShowDataProps {
-  data: Data;
-}
-
-const ShowData: React.FC<ShowDataProps> = ({ data }) => (
-  <BoardItem>
-    <BoardTitle>{data.title}</BoardTitle>
-    <BoardBody>{data.body}</BoardBody>
-  </BoardItem>
-);
 
 const App = () => {
   return (
     <Display>
       <Header>Board</Header>
       <BoardList>
-        {mockData.map((post) => (
-          <ShowData key={post.id} data={post} />
-        ))}
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/posts" element={<Post />} />
+          </Routes>
+        </Router>
       </BoardList>
+      <PostButton>Write My Board ✏️</PostButton>
     </Display>
   );
 };
