@@ -1,15 +1,18 @@
 import "./App.css";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 
-import Post from "./getPost";
 import Home from "./home";
+
+const queryClient = new QueryClient();
 
 const Display = styled.div`
   width: 600px;
   height: 100vh;
   position: relative;
+  overflow-y: auto;
 `;
 
 const Header = styled.div`
@@ -31,7 +34,7 @@ const PostButton = styled.button`
   border-radius: 0;
   border-color: black;
   background-color: white;
-  position: absolute;
+  position: fixed;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
@@ -39,18 +42,19 @@ const PostButton = styled.button`
 
 const App = () => {
   return (
-    <Display>
-      <Header>Board</Header>
-      <BoardList>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/posts" element={<Post />} />
-          </Routes>
-        </Router>
-      </BoardList>
-      <PostButton>Write My Board ✏️</PostButton>
-    </Display>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Display>
+          <Header>Board</Header>
+          <BoardList>
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </BoardList>
+          <PostButton>Write My Board ✏️</PostButton>
+        </Display>
+      </Router>
+    </QueryClientProvider>
   );
 };
 

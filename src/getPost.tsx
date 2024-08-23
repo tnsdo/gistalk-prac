@@ -9,6 +9,7 @@ const fetchPost = async (): Promise<Data[]> => {
   const { data } = await axios.get<Data[]>(
     "https://jsonplaceholder.typicode.com/posts",
   );
+  console.log("Fetched data:", data);
   return data;
 };
 
