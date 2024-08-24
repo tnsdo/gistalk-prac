@@ -1,11 +1,17 @@
 import "./App.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import styled from "styled-components";
 
 import Home from "./home";
 import Board from "./readBoard";
+import WriteBoard from "./writeBoard";
 
 const queryClient = new QueryClient();
 
@@ -41,20 +47,35 @@ const PostButton = styled.button`
   transform: translateX(-50%);
 `;
 
-const App = () => {
+const AppContent: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/writeBoard");
+  };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Display>
+        <Header>Board</Header>
+        <BoardList>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/posts/:id" element={<Board />} />
+            <Route path="/writeBoard" element={<WriteBoard />} />
+          </Routes>
+        </BoardList>
+        <PostButton onClick={handleButtonClick}>Write My Board ✏️</PostButton>
+      </Display>
+    </QueryClientProvider>
+  );
+};
+
+const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Display>
-          <Header>Board</Header>
-          <BoardList>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/posts/:id" element={<Board />} />
-            </Routes>
-          </BoardList>
-          <PostButton>Write My Board ✏️</PostButton>
-        </Display>
+        <AppContent />
       </Router>
     </QueryClientProvider>
   );
