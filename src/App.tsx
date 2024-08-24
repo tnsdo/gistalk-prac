@@ -51,6 +51,10 @@ const PostButton = styled.button`
 const AppContent: React.FC = () => {
   const navigate = useNavigate();
 
+  const handHeaderClick = () => {
+    navigate("/");
+  };
+
   const handleButtonClick = () => {
     navigate("/writeBoard");
   };
@@ -58,7 +62,7 @@ const AppContent: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Display>
-        <Header>Board</Header>
+        <Header onClick={handHeaderClick}>Board</Header>
         <BoardList>
           <Routes>
             <Route path="/" element={<Home />} />
