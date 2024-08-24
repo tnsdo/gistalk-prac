@@ -11,6 +11,7 @@ import styled from "styled-components";
 
 import Home from "./home";
 import Board from "./readBoard";
+import UserPf from "./userPf";
 import WriteBoard from "./writeBoard";
 
 const queryClient = new QueryClient();
@@ -63,6 +64,7 @@ const AppContent: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/posts/:id" element={<Board />} />
             <Route path="/writeBoard" element={<WriteBoard />} />
+            <Route path="/user/:userId" element={<UserPf />} />
           </Routes>
         </BoardList>
         <PostButton onClick={handleButtonClick}>Write My Board ✏️</PostButton>

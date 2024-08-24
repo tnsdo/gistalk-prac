@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { Data } from "./mockData";
@@ -60,7 +60,11 @@ const ReadBoard: React.FC = () => {
   return (
     <Container>
       <Title>{data?.title}</Title>
-      <UserId>Written by {data?.userId}</UserId>
+      <li key={data?.userId}>
+        <Link to={`/user/${data?.userId}`}>
+          <UserId>Written by {data?.userId}</UserId>
+        </Link>
+      </li>
       <Body>{data?.body}</Body>
     </Container>
   );
