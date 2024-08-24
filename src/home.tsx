@@ -1,6 +1,6 @@
 import "./App.css";
 
-import GetPost from "./getPost";
+import GetPost from "./getData";
 
 const Home = () => {
   return <GetPost />;
