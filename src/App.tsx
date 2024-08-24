@@ -1,46 +1,90 @@
 import "./App.css";
 
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled, { CSSProperties } from "styled-components";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
+import styled from "styled-components";
 
-import ReactLogo from "./assets/react.svg?react";
+import Home from "./home";
+import Board from "./readBoard";
+import UserPf from "./userPf";
+import WriteBoard from "./writeBoard";
 
-const ReadTheDocs = styled.p<{
-  $color?: CSSProperties["color"];
-}>`
-  color: ${({ $color }) => $color ?? "red"};
+const queryClient = new QueryClient();
+
+const Display = styled.div`
+  width: 600px;
+  height: 100vh;
+  position: relative;
+  overflow-y: auto;
 `;
 
-function App() {
-  const [count, setCount] = useState(0);
-  const { t } = useTranslation("main");
+const Header = styled.div`
+  font-family: "Goblin One";
+  text-align: center;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 50px;
+  color: black;
+`;
+
+const BoardList = styled.ul`
+  align-items: center;
+  list-style: none;
+  margin-top: 30px;
+`;
+
+const PostButton = styled.button`
+  border-radius: 0;
+  border-color: black;
+  background-color: white;
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const AppContent: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handHeaderClick = () => {
+    navigate("/");
+  };
+
+  const handleButtonClick = () => {
+    navigate("/writeBoard");
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src="/src/assets/react.svg" className="logo" alt="Vite logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <ReadTheDocs $color={"blue"}>
-        {t("title")}
-        <ReactLogo width={16} height={16} />
-      </ReadTheDocs>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Display>
+        <Header onClick={handHeaderClick}>Board</Header>
+        <BoardList>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/posts/:id" element={<Board />} />
+            <Route path="/writeBoard" element={<WriteBoard />} />
+            <Route path="/user/:userId" element={<UserPf />} />
+          </Routes>
+        </BoardList>
+        <PostButton onClick={handleButtonClick}>Write My Board ✏️</PostButton>
+      </Display>
+    </QueryClientProvider>
   );
-}
+};
+
+const App: React.FC = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <AppContent />
+      </Router>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
