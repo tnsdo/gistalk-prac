@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 
 import Home from "./home";
+import Board from "./readBoard";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => {
           <BoardList>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/posts/:id" element={<Board />} />
             </Routes>
           </BoardList>
           <PostButton>Write My Board ✏️</PostButton>

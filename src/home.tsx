@@ -1,9 +1,9 @@
 import "./App.css";
 
-import GetPost from "./getData";
+import GetData from "./getData";
 
 const Home = () => {
-  return <GetPost />;
+  return <GetData />;
 };
 
 export default Home;

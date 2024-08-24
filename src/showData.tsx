@@ -38,6 +38,7 @@ const BoardBody = styled.div`
   line-height: 15px;
   margin-left: 20px;
   margin-top: 5px;
+  color: black;
 `;
 
 const ShowData: React.FC<ShowDataProps> = ({ data }) => (
